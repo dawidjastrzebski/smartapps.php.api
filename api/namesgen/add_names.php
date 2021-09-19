@@ -25,7 +25,7 @@
     $names = new Names();
     $namesRepo = new NamesRepository($db);
     $names->name = $linearray[0];
-    $names->gender = $linearray[1];
+    $names->gender = $linearray[1] == "MĘŻCZYZNA" ? "MALE" : "FEMALE";
     $names->numberOfOccurances =str_replace("\r", "", $linearray[2]);
     $names->dateReleased = $released;
       if($namesRepo->create($names)) {

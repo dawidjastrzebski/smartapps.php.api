@@ -29,7 +29,7 @@
 
   foreach($names_array as $name)
   {
-    if($name['gender'] == "MĘŻCZYZNA")
+    if($name['gender'] == "MALE")
     {
         //array_push($maleNamesArray,$name);
         if(intval($name['numberOfOccurances'])>$namesInfo->maxMalePopularity)
