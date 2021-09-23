@@ -23,7 +23,7 @@
   $namesRepo = new NamesRepository($db);
 
   $names_array = $namesRepo->read_all();
-  
+
   $maleNamesArray = array();
   $femaleNamesArray = array();
 
@@ -31,36 +31,22 @@
   {
     if($name['gender'] == "MALE")
     {
-        //array_push($maleNamesArray,$name);
-        if(intval($name['numberOfOccurances'])>$namesInfo->maxMalePopularity)
-        {
-            $namesInfo->maxMalePopularity = intval($name['numberOfOccurances']); 
-        }
-
-        if(intval($name['numberOfOccurances'])<$namesInfo->minMalePopularity)
-        {
-            $namesInfo->minMalePopularity = intval($name['numberOfOccurances']); 
-        }
+        array_push($maleNamesArray,$name);
 
         if(strlen($name['name'])>$namesInfo->maxMaleLength)
         {
             $namesInfo->maxMaleLength = strlen($name['name']); 
         }
 
-        if(intval($name['numberOfOccurances'])<$namesInfo->minMaleLength)
+        if(strlen($name['name'])<$namesInfo->minMaleLength)
         {
-            $namesInfo->minMaleLength = intval($name['numberOfOccurances']); 
+            $namesInfo->minMaleLength = strlen($name['name']); 
         }
-
-
-
+        
     }
     else
     {
-        if(intval($name['numberOfOccurances'])>$namesInfo->maxFemalePopularity)
-        {
-            $namesInfo->maxFemalePopularity = intval($name['numberOfOccurances']); 
-        }
+        array_push($femaleNamesArray,$name);
 
         if(strlen($name['name'])>intval($namesInfo->maxFemaleLength))
         {
@@ -72,15 +58,10 @@
             $namesInfo->minFemaleLenth = strlen($name['name']); 
         }
 
-        if($name['numberOfOccurances']<$namesInfo->minFemalePopularity)
-        {
-            $namesInfo->minFemalePopularity = intval($name['numberOfOccurances']); 
-        }
     }
   }
 
   //$maxPopularity = max(array_column($names_array,'numberOfOccurances'));
-
 
   echo json_encode($namesInfo);
 

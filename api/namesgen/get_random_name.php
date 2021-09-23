@@ -29,11 +29,10 @@
   // Get params
   $params->firstLetter = isset($_GET['firstLetter']) ? $_GET['firstLetter'] : '';
   $params->gender = isset($_GET['gender']) ? $_GET['gender'] : '';
-  $params->topX = isset($_GET['topX']) ? $_GET['topX'] : '';
   $params->maxLength = isset($_GET['maxLength']) ? $_GET['maxLength'] : '';
   $params->minLength = isset($_GET['minLength']) ? $_GET['minLength'] : '';
-  $params->maxPopularity = isset($_GET['maxPopularity']) ? $_GET['maxPopularity'] : '';
-  $params->minPopularity = isset($_GET['minPopularity']) ? $_GET['minPopularity'] : '';
+  $params->veryPopularName = isset($_GET['veryPopularName']) ? $_GET['veryPopularName'] : '';
+  $params->notPopularName = isset($_GET['notPopularName']) ? $_GET['notPopularName'] : '';
   
   // Blog post query
   $names_array = $namesRepo->get_specific_names($params);
@@ -45,9 +44,19 @@
     if($noMatches>0)
     {
       //Draw name
-      $randomItem = rand(1, $noMatches) - 1;
-      
-      $nameToReturn = json_encode($names_array[$randomItem]);
+
+      //17210
+
+      $randomItem = rand(0, $noMatches-1);      
+      //$drawedItem = $names_array[17210];
+      $drawedItem = $names_array[$randomItem];
+      $additional = array("additional info" => " random item - " . strval($randomItem)." no maches - ".strval($noMatches));      
+      array_merge($drawedItem, $additional);
+      $nameToReturn = json_encode(array_merge($drawedItem, $additional));
+      if(empty($nameToReturn))
+      {
+        $nameToReturn = json_encode($additional);
+      } 
     }
     else {
       $nameToReturn = json_encode(array(
